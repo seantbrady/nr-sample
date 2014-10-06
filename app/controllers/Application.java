@@ -1,5 +1,7 @@
 package controllers;
 
+import com.newrelic.api.agent.NewRelic;
+import controllers.routes;
 import play.Play;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -13,7 +15,7 @@ public class Application extends Controller {
     public static final String DISPOSITION_VALUE = "attachment;filename=\"%s\"";
 
     public static Result index() {
-        return ok(file.render(routes.Application.file()));
+        return ok(file.render(controllers.routes.Application.file()));
     }
 
     public static Result file() {
@@ -22,4 +24,8 @@ public class Application extends Controller {
         return ok(inputStream);
     }
 
+    public static Result ping() {
+        NewRelic.ignoreTransaction();
+        return ok("echo");
+    }
 }
